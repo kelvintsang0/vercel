@@ -1,5 +1,5 @@
-"use client";
 
+"use client";
 import { useState } from "react";
 
 function Stat({ label, value, sub }: { label: string; value: string; sub: string }) {
@@ -190,7 +190,7 @@ function ContactForm() {
         <div className="text-sm text-slate-600">{status}</div>
       </div>
       <p className="mt-3 text-xs text-slate-500">
-        Tip: To enable direct in‑page sending without opening your email client, set NEXT_PUBLIC_CONTACT_ENDPOINT to "/api/contact" after you configure the API route.
+        Tip: To enable direct in-page sending without opening your email client, set NEXT_PUBLIC_CONTACT_ENDPOINT to "/api/contact" after you configure the API route.
       </p>
     </form>
   );
@@ -247,7 +247,7 @@ export default function Page() {
             <ul className="mt-6 space-y-2 text-slate-700">
               <li>• Manager, Data Quality & Stewardship — AIMCo (Canada)</li>
               <li>• VP, Chief Data Office — J.P. Morgan Asset Management (HK)</li>
-              <li>• Analytics — Hong Kong Jockey Club; Melco‑Crown (Macau)</li>
+              <li>• Analytics — Hong Kong Jockey Club; Melco-Crown (Macau)</li>
             </ul>
             <div className="mt-7 flex gap-3 flex-wrap">
               {[
@@ -282,7 +282,7 @@ export default function Page() {
             </div>
 
             <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h3 className="font-semibold">Self‑Introduction</h3>
+              <h3 className="font-semibold">Self-Introduction</h3>
               <p className="mt-1 text-slate-600 text-sm">
                 [Write 4–6 sentences in your voice about who you help, the problems you
                 solve, proof points (e.g., roles, impact), and a light personal line.]
@@ -296,7 +296,7 @@ export default function Page() {
             </div>
             <div className="aspect-[4/3] rounded-3xl bg-white border border-slate-200 shadow-sm p-6">
               <div className="grid grid-cols-2 gap-4 h-full">
-                <Stat label="Data Products launched" value="10+" sub="cross‑functional squads" />
+                <Stat label="Data Products launched" value="10+" sub="cross-functional squads" />
                 <Stat label="Automations retired VBA" value="40+" sub="legacy tools modernized" />
                 <Stat label="Quality issues reduced" value="↓" sub="with governance & Atlan/Soda" />
                 <Stat label="Stakeholders aligned" value="100+" sub="PMs in global workflows" />
@@ -309,20 +309,20 @@ export default function Page() {
 
       <section id="services" className="mx-auto max-w-6xl px-4 py-16">
         <h2 className="text-2xl md:text-3xl font-bold tracking-tight">From overview to detail — here’s how I help</h2>
-        <p className="mt-2 text-slate-600">Start with a high‑level plan, then go deep into execution. Engagements are modular—pick what you need.</p>
+        <p className="mt-2 text-slate-600">Start with a high-level plan, then go deep into execution. Engagements are modular—pick what you need.</p>
         <div className="mt-8 grid md:grid-cols-3 gap-6">
           <ServiceCard title="Data Project Management" points={["Agile delivery, POM & OKRs","Roadmaps, backlogs, sprint ops","Vendor & stakeholder management"]} icon="📦"/>
-          <ServiceCard title="Data Governance Team Building" points={["Stand up data stewardship","Catalog & quality tooling (Atlan, Soda)","SOPs,, SOR criteria, controls"]} icon="🧭"/>
+          <ServiceCard title="Data Governance Team Building" points={["Stand up data stewardship","Catalog & quality tooling (Atlan, Soda)","SOPs, SOR criteria, controls"]} icon="🧭"/>
           <ServiceCard title="Process Automation" points={["Alteryx/Xceptor modernization","Retire VBA & manual workflows","Qlik/SQL/Python accelerators"]} icon="⚙️"/>
         </div>
 
         <div className="mt-8">
-          <ImagePlaceholder title="Process Automation — Swimlane Diagram" hint="Drop a PNG/JPG of your swimlane (As‑Is → To‑Be)." />
+          <ImagePlaceholder title="Process Automation — Swimlane Diagram" hint="Drop a PNG/JPG of your swimlane (As-Is → To-Be)." />
         </div>
 
         <div className="mt-10 grid md:grid-cols-2 gap-6">
-          <DeepDive title="Investment Management & Analytics" body="A decade in asset‑management operations with J.P. Morgan plus analytics roles at the Hong Kong Jockey Club and Melco‑Crown. I understand data lineage from market data to fund accounting to client reporting—and the controls, SLAs, and risk mindsets that go with it." bullets={["Launched inaugural ETFs in Australia; automated 180 daily data points into Oracle.","Optimized Fact Sheets, saving 3.5 days/month across 50 SICAV funds.","Built regression & segmentation models; delivered 360° MIS dashboards."]}/>
-          <DeepDive title="Data & AI Advisory" body="Bridge AI opportunities with practical data foundations. I use MIT‑informed AI design frameworks to define behaviors, processes, and data strategies that actually ship." bullets={["Define metrics & scope, align strategy (best‑product vs. full‑solution).","Prioritize complementary assets: process, consent, compliance, infra.","Prototype assistants, quality monitors, and analytics copilots."]}/>
+          <DeepDive title="Investment Management & Analytics" body="A decade in asset-management operations with J.P. Morgan plus analytics roles at the Hong Kong Jockey Club and Melco-Crown. I understand data lineage from market data to fund accounting to client reporting—and the controls, SLAs, and risk mindsets that go with it." bullets={["Launched inaugural ETFs in Australia; automated 180 daily data points into Oracle.","Optimized Fact Sheets, saving 3.5 days/month across 50 SICAV funds.","Built regression & segmentation models; delivered 360° MIS dashboards."]}/>
+          <DeepDive title="Data & AI Advisory" body="Bridge AI opportunities with practical data foundations. I use MIT-informed AI design frameworks to define behaviors, processes, and data strategies that actually ship." bullets={["Define metrics & scope, align strategy (best-product vs. full-solution).","Prioritize complementary assets: process, consent, compliance, infra.","Prototype assistants, quality monitors, and analytics copilots."]}/>
         </div>
       </section>
 
@@ -340,7 +340,7 @@ export default function Page() {
               company="J.P. Morgan Asset Management — Hong Kong"
               title="VP, Chief Data Office (Promoted from Associate → VP)"
               period="2013 — 2023"
-              items={["Project management & agile delivery as Scrum Master.","Product Owner for global funds database (POM).","Launched Australia ETFs; automated market‑to‑reporting data flows.","Transformed 40+ VBA tools to enterprise automations (Alteryx/Xceptor).","Streamlined proxy voting for 100+ PMs; integrated with firmwide workflow."]}
+              items={["Project management & agile delivery as Scrum Master.","Product Owner for global funds database (POM).","Launched Australia ETFs; automated market-to-reporting data flows.","Transformed 40+ VBA tools to enterprise automations (Alteryx/Xceptor).","Streamlined proxy voting for 100+ PMs; integrated with firmwide workflow."]}
             />
             <Role
               company="Hong Kong Jockey Club — Hong Kong"
@@ -349,7 +349,7 @@ export default function Page() {
               items={["Predictive models with regression & inferential stats (SAS).","Built 360° customer MIS; informed campaigns with lift up to 4×."]}
             />
             <Role
-              company="Melco‑Crown Entertainment — HK/Macau"
+              company="Melco-Crown Entertainment — HK/Macau"
               title="Manager, Strategic Marketing"
               period="2008 — 2011"
               items={["Forecasting of events & segmentation; tracking creative KPIs."]}
@@ -374,9 +374,9 @@ export default function Page() {
             <ImpactCard title="Data Governance" desc="Designed controls, authored SOPs, and set SOR criteria; established metrics and working groups for alignment."/>
             <ImpactCard title="Automation" desc="Retired legacy PC & 40+ VBA tools by migrating to firmwide platforms—reducing risk and cycle time."/>
             <ImpactCard title="Reporting Ops" desc="Fact Sheet optimization eliminated duplicate data and saved 3.5 days each month across 50 funds."/>
-            <ImpactCard title="ETF Launch" desc="Coordinated cross‑functional team to launch inaugural ETFs; integrated 180 market data points into Oracle."/>
+            <ImpactCard title="ETF Launch" desc="Coordinated cross-functional team to launch inaugural ETFs; integrated 180 market data points into Oracle."/>
             <ImpactCard title="Analytics" desc="Built models and dashboards that improved campaign performance up to 4× and informed exec decisions."/>
-            <ImpactCard title="Change Leadership" desc="Drove agile adoption; created one‑pagers and newsletters for crisp decisions and transparency."/>
+            <ImpactCard title="Change Leadership" desc="Drove agile adoption; created one-pagers and newsletters for crisp decisions and transparency."/>
           </div>
         </div>
       </section>
@@ -387,7 +387,7 @@ export default function Page() {
           <div className="p-6 rounded-3xl border border-slate-200 bg-white shadow-sm">
             <h3 className="font-semibold text-lg">Speaking & Leadership</h3>
             <ul className="mt-4 space-y-2 text-slate-700">
-              <li>• Co‑Chair, Toastmasters District 96 Annual Conference 2025 (Burnaby Conference Center)</li>
+              <li>• Co-Chair, Toastmasters District 96 Annual Conference 2025 (Burnaby Conference Center)</li>
               <li>• Area Director (2024/25), Vancouver Entrepreneurs Toastmasters</li>
               <li>• Past Club President (2019), JPMorgan AWM HK Toastmasters</li>
               <li>• Area Contest — 3rd place (2023)</li>
@@ -398,7 +398,7 @@ export default function Page() {
             <h3 className="font-semibold text-lg">Community & Passions</h3>
             <ul className="mt-4 space-y-2 text-slate-700">
               <li>• Regular blood donor and community volunteer</li>
-              <li>• Producer of internal data‑management video series to uplift colleagues</li>
+              <li>• Producer of internal data-management video series to uplift colleagues</li>
               <li>• Music & teamwork: Member, JPMorgan HK Orchestra (2017–2023)</li>
               <li>• Multilingual: English, Chinese, Japanese</li>
             </ul>

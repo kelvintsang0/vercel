@@ -144,7 +144,7 @@ function ContactForm() {
         setStatus("Opening your email client…");
       }
     } catch (err) {
-      setStatus("Sorry, something went wrong. Please email me directly at kelvintsang@gmail.com.");
+      setStatus("Sorry, something went wrong. Please email me directly at kelvin.tsang@inoutflows.com.");
     }
   }
 
@@ -212,7 +212,7 @@ export default function Page() {
       <header className="sticky top-0 z-50 backdrop-blur bg-white/80 border-b border-slate-200">
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
           <a href="#overview" className="font-semibold text-lg tracking-tight">
-            Kelvin Tsang <span className="text-slate-400">· Data, AI & Ops</span>
+            Kelvin Tsang <span className="text-slate-400">· Data & AI Project Manager</span>
           </a>
           <nav className="hidden md:flex gap-6 text-sm">
             {sections.map((s) => (
@@ -242,12 +242,12 @@ export default function Page() {
               I build reliable <span className="bg-gradient-to-r from-indigo-900 to-blue-600 bg-clip-text text-transparent">data & AI operations</span> that scale.
             </h1>
             <p className="mt-5 text-slate-600 text-lg leading-relaxed">
-              20 years across software development, analytics, and program delivery. I lead multidisciplinary teams to ship data platforms, govern data quality, and automate processes—so leaders get trusted insights and teams move faster.
+              20 years across software development, analytics, and project delivery. I lead cross-functional teams to ship data platforms, govern data quality, and automate processes—so leaders get trusted insights and decisions are made faster.
             </p>
             <ul className="mt-6 space-y-2 text-slate-700">
               <li>• Manager, Data Quality & Stewardship — AIMCo (Canada)</li>
               <li>• VP, Chief Data Office — J.P. Morgan Asset Management (HK)</li>
-              <li>• Analytics — Hong Kong Jockey Club; Melco-Crown (Macau)</li>
+              <li>• Analytics — Hong Kong Jockey Club (HK); Melco-Crown (Macau)</li>
             </ul>
             <div className="mt-7 flex gap-3 flex-wrap">
               {[
@@ -280,14 +280,6 @@ export default function Page() {
                 See services
               </a>
             </div>
-
-            <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h3 className="font-semibold">Self-Introduction</h3>
-              <p className="mt-1 text-slate-600 text-sm">
-                [Write 4–6 sentences in your voice about who you help, the problems you
-                solve, proof points (e.g., roles, impact), and a light personal line.]
-              </p>
-            </div>
           </div>
 
           <div className="relative">
@@ -298,11 +290,10 @@ export default function Page() {
               <div className="grid grid-cols-2 gap-4 h-full">
                 <Stat label="Data Products launched" value="10+" sub="cross-functional squads" />
                 <Stat label="Automations retired VBA" value="40+" sub="legacy tools modernized" />
-                <Stat label="Quality issues reduced" value="↓" sub="with governance & Atlan/Soda" />
+                <Stat label="Quality issues managed" value="↓" sub="with governance & Atlan/Soda" />
                 <Stat label="Stakeholders aligned" value="100+" sub="PMs in global workflows" />
               </div>
             </div>
-            <p className="text-xs text-slate-500 mt-3">*Representative highlights; details under Impact.</p>
           </div>
         </div>
       </section>
@@ -314,10 +305,6 @@ export default function Page() {
           <ServiceCard title="Data Project Management" points={["Agile delivery, POM & OKRs","Roadmaps, backlogs, sprint ops","Vendor & stakeholder management"]} icon="📦"/>
           <ServiceCard title="Data Governance Team Building" points={["Stand up data stewardship","Catalog & quality tooling (Atlan, Soda)","SOPs, SOR criteria, controls"]} icon="🧭"/>
           <ServiceCard title="Process Automation" points={["Alteryx/Xceptor modernization","Retire VBA & manual workflows","Qlik/SQL/Python accelerators"]} icon="⚙️"/>
-        </div>
-
-        <div className="mt-8">
-          <ImagePlaceholder title="Process Automation — Swimlane Diagram" hint="Drop a PNG/JPG of your swimlane (As-Is → To-Be)." />
         </div>
 
         <div className="mt-10 grid md:grid-cols-2 gap-6">
@@ -362,7 +349,7 @@ export default function Page() {
         <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Capabilities</h2>
         <div className="mt-8 grid md:grid-cols-3 gap-6">
           <Capability title="Data Management" skills={["Governance & Stewardship","Lineage & SOR","Metadata & Catalog (Atlan)","Data Quality (Soda)"]} />
-          <Capability title="Tech & Tools" skills={["SQL, Python","Alteryx, Xceptor","Qlik, Oracle, AWS","JIRA/Confluence"]} />
+          <Capability title="Tech & Tools" skills={["SQL, Python, Databricks","Alteryx, Xceptor","Qlik, Oracle, AWS","Azure DevOps", "JIRA/Confluence"]} />
           <Capability title="Delivery" skills={["Agile / Scrum","PMO & OKRs","Stakeholder mgmt.","Vendor mgmt."]} />
         </div>
       </section>
@@ -389,8 +376,6 @@ export default function Page() {
             <ul className="mt-4 space-y-2 text-slate-700">
               <li>• Co-Chair, Toastmasters District 96 Annual Conference 2025 (Burnaby Conference Center)</li>
               <li>• Area Director (2024/25), Vancouver Entrepreneurs Toastmasters</li>
-              <li>• Past Club President (2019), JPMorgan AWM HK Toastmasters</li>
-              <li>• Area Contest — 3rd place (2023)</li>
               <li>• UBC Computer Science Mentorship — volunteer mentor</li>
             </ul>
           </div>
@@ -398,7 +383,6 @@ export default function Page() {
             <h3 className="font-semibold text-lg">Community & Passions</h3>
             <ul className="mt-4 space-y-2 text-slate-700">
               <li>• Regular blood donor and community volunteer</li>
-              <li>• Producer of internal data-management video series to uplift colleagues</li>
               <li>• Music & teamwork: Member, JPMorgan HK Orchestra (2017–2023)</li>
               <li>• Multilingual: English, Chinese, Japanese</li>
             </ul>

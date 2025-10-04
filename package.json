@@ -21,4 +21,7 @@
     "@types/react": "^18.2.66",
     "@types/node": "^20.11.20"
   }
+  "scripts": {
+    "build": "[my-framework] build --output public"
+  }
 }

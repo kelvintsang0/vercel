@@ -283,19 +283,6 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="relative">
-            <div className="mb-4">
-              <ImagePlaceholder title="Headshot / Portrait" hint="Upload a clear, friendly photo." />
-            </div>
-            <div className="aspect-[4/3] rounded-3xl bg-white border border-slate-200 shadow-sm p-6">
-              <div className="grid grid-cols-2 gap-4 h-full">
-                <Stat label="Data Products launched" value="10+" sub="cross-functional squads" />
-                <Stat label="Automations retired VBA" value="40+" sub="legacy tools modernized" />
-                <Stat label="Quality issues managed" value="↓" sub="with governance & Atlan/Soda" />
-                <Stat label="Stakeholders aligned" value="100+" sub="PMs in global workflows" />
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 

@@ -392,7 +392,7 @@ export default function Page() {
 
         <div className="mt-10 grid md:grid-cols-3 gap-6">
           <img
-            src="/images/onstage.JPG"
+            src="/images/onstage.jpg"
             alt="Speaking on Stage"
             className="rounded-2xl shadow-md object-cover w-full h-64"
           />

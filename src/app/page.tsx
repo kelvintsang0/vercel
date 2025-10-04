@@ -1,6 +1,7 @@
 
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 function Stat({ label, value, sub }: { label: string; value: string; sub: string }) {
   return (

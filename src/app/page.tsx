@@ -390,9 +390,21 @@ export default function Page() {
         </div>
 
         <div className="mt-10 grid md:grid-cols-3 gap-6">
-          <ImagePlaceholder title="Speaking on Stage" hint="A wide shot from a talk or contest." />
-          <ImagePlaceholder title="Team Photo" hint="Candid with teammates or club members." />
-          <ImagePlaceholder title="Blood Donation" hint="Photo at Canadian Blood Services center." />
+          <img
+            src="/images/OnStage.JPG"
+            alt="Speaking on Stage"
+            className="rounded-2xl shadow-md object-cover w-full h-64"
+          />
+          <img
+            src="/images/TeamWork.heic"
+            alt="Team Photo"
+            className="rounded-2xl shadow-md object-cover w-full h-64"
+          />
+          <img
+            src="/images/GiveBlood.jpg"
+            alt="Blood Donation"
+            className="rounded-2xl shadow-md object-cover w-full h-64"
+          />
         </div>
       </section>
 

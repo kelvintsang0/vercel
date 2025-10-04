@@ -391,17 +391,17 @@ export default function Page() {
 
         <div className="mt-10 grid md:grid-cols-3 gap-6">
           <img
-            src="public/images/OnStage.JPG"
+            src="/images/OnStage.JPG"
             alt="Speaking on Stage"
             className="rounded-2xl shadow-md object-cover w-full h-64"
           />
           <img
-            src="public/images/TeamWork.heic"
+            src="/images/TeamWork.heic"
             alt="Team Photo"
             className="rounded-2xl shadow-md object-cover w-full h-64"
           />
           <img
-            src="public/images/GiveBlood.jpg"
+            src="/images/GiveBlood.jpg"
             alt="Blood Donation"
             className="rounded-2xl shadow-md object-cover w-full h-64"
           />

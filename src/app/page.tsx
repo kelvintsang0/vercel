@@ -109,6 +109,22 @@ function ImagePlaceholder({ title, hint }: { title: string; hint: string }) {
   );
 }
 
+
+function YouTube({ videoId, title }: { videoId: string; title: string }) {
+  return (
+    <div className="relative w-full overflow-hidden rounded-2xl shadow aspect-video">
+      <iframe
+        src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0`}
+        title={title}
+        className="absolute inset-0 h-full w-full"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      />
+    </div>
+  );
+}
+
 function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -285,7 +301,7 @@ export default function Page() {
 
           <div className="relative">
             <div className="mb-4">
-              <ImagePlaceholder title="Headshot / Portrait" hint="Upload a clear, friendly photo." />
+              <YouTube videoId="RSM33InZisw" title="Self Introduction - Kelvin Tsang" />
             </div>
             <div className="aspect-[4/3] rounded-3xl bg-white border border-slate-200 shadow-sm p-6">
               <div className="grid grid-cols-2 gap-4 h-full">

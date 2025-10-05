@@ -206,9 +206,6 @@ function ContactForm() {
         </button>
         <div className="text-sm text-slate-600">{status}</div>
       </div>
-      <p className="mt-3 text-xs text-slate-500">
-        Tip: To enable direct in-page sending without opening your email client, set NEXT_PUBLIC_CONTACT_ENDPOINT to "/api/contact" after you configure the API route.
-      </p>
     </form>
   );
 }

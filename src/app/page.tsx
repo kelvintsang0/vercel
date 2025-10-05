@@ -433,7 +433,7 @@ export default function Page() {
           </p>
 
           <div className="mt-10 grid md:grid-cols-2 gap-6">
-            <ContactCard label="Email" value="kelvintsang@gmail.com" href="mailto:kelvintsang@gmail.com" />
+            <ContactCard label="Email" value="kelvin.tsang@inoutflows.com" href="mailto:kelvin.tsang@inoutflows.com" />
             <ContactCard label="LinkedIn" value="linkedin.com/in/kelvintsang" href="https://www.linkedin.com/in/kelvintsang" />
           </div>
 

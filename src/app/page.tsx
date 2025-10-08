@@ -1,7 +1,5 @@
-
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 
 function Stat({ label, value, sub }: { label: string; value: string; sub: string }) {
   return (
@@ -97,18 +95,6 @@ function ContactCard({ label, value, href }: { label: string; value: string; hre
     </a>
   );
 }
-
-function ImagePlaceholder({ title, hint }: { title: string; hint: string }) {
-  return (
-    <figure className="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-center shadow-sm">
-      <div className="mx-auto h-40 w-full max-w-sm rounded-xl bg-slate-50 flex items-center justify-center">
-        <span className="text-sm text-slate-500">[ Image: {title} ]</span>
-      </div>
-      <figcaption className="mt-3 text-xs text-slate-500">{hint}</figcaption>
-    </figure>
-  );
-}
-
 
 function YouTube({ videoId, title }: { videoId: string; title: string }) {
   return (
@@ -256,7 +242,7 @@ export default function Page() {
               I build reliable <span className="bg-gradient-to-r from-indigo-900 to-blue-600 bg-clip-text text-transparent">data & AI operations</span> that scale.
             </h1>
             <p className="mt-5 text-slate-600 text-lg leading-relaxed">
-              20 years across software development, analytics, and project delivery. I lead cross-functional teams to ship data platforms, govern data quality, and automate processes—so leaders get trusted insights and decisions are made faster.
+              20 years across software development, analytics, and project delivery. I lead cross-functional teams to ship data platforms, govern data quality, and automate processes—so leaders get trusted insights and decisions are made faster. Recent focus: modern lakehouse patterns on Microsoft Fabric and Databricks with embedded governance.
             </p>
             <ul className="mt-6 space-y-2 text-slate-700">
               <li>• Manager, Data Quality & Stewardship — AIMCo (Canada)</li>
@@ -271,6 +257,7 @@ export default function Page() {
                 { t: "MBA", c: "bg-amber-600" },
                 { t: "PSM I", c: "bg-sky-600" },
                 { t: "AWS CCP / SAA", c: "bg-fuchsia-600" },
+                { t: "Microsoft Fabric", c: "bg-violet-700" } // NEW
               ].map((b) => (
                 <span
                   key={b.t}
@@ -315,15 +302,56 @@ export default function Page() {
       <section id="services" className="mx-auto max-w-6xl px-4 py-16">
         <h2 className="text-2xl md:text-3xl font-bold tracking-tight">From overview to detail — here’s how I help</h2>
         <p className="mt-2 text-slate-600">Start with a high-level plan, then go deep into execution. Engagements are modular—pick what you need.</p>
-        <div className="mt-8 grid md:grid-cols-3 gap-6">
+
+        {/* Services Grid (responsive 1/2/4 columns) */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <ServiceCard title="Data Project Management" points={["Agile delivery, POM & OKRs","Roadmaps, backlogs, sprint ops","Vendor & stakeholder management"]} icon="📦"/>
           <ServiceCard title="Data Governance Team Building" points={["Stand up data stewardship","Catalog & quality tooling (Atlan, Soda)","SOPs, SOR criteria, controls"]} icon="🧭"/>
           <ServiceCard title="Process Automation" points={["Alteryx/Xceptor modernization","Retire VBA & manual workflows","Qlik/SQL/Python accelerators"]} icon="⚙️"/>
+          {/* NEW: Microsoft Fabric service card */}
+          <ServiceCard
+            title="Microsoft Fabric Solutions"
+            icon="🧩"
+            points={[
+              "Lakehouse & OneLake design",
+              "Dataflow Gen2 pipelines & orchestration",
+              "Synapse (Fabric) + Power BI integration",
+              "Governance & lineage with Purview"
+            ]}
+          />
         </div>
 
+        {/* Deep Dives */}
         <div className="mt-10 grid md:grid-cols-2 gap-6">
-          <DeepDive title="Investment Management & Analytics" body="A decade in asset-management operations with J.P. Morgan plus analytics roles at the Hong Kong Jockey Club and Melco-Crown. I understand data lineage from market data to fund accounting to client reporting—and the controls, SLAs, and risk mindsets that go with it." bullets={["Launched inaugural ETFs in Australia; automated 180 daily data points into Oracle.","Optimized Fact Sheets, saving 3.5 days/month across 50 SICAV funds.","Built regression & segmentation models; delivered 360° MIS dashboards."]}/>
-          <DeepDive title="Data & AI Advisory" body="Bridge AI opportunities with practical data foundations. I use MIT-informed AI design frameworks to define behaviors, processes, and data strategies that actually ship." bullets={["Define metrics & scope, align strategy (best-product vs. full-solution).","Prioritize complementary assets: process, consent, compliance, infra.","Prototype assistants, quality monitors, and analytics copilots."]}/>
+          <DeepDive
+            title="Investment Management & Analytics"
+            body="A decade in asset-management operations with J.P. Morgan plus analytics roles at the Hong Kong Jockey Club and Melco-Crown. I understand data lineage from market data to fund accounting to client reporting—and the controls, SLAs, and risk mindsets that go with it."
+            bullets={[
+              "Launched inaugural ETFs in Australia; automated 180 daily data points into Oracle.",
+              "Optimized Fact Sheets, saving 3.5 days/month across 50 SICAV funds.",
+              "Built regression & segmentation models; delivered 360° MIS dashboards."
+            ]}
+          />
+          <DeepDive
+            title="Data & AI Advisory"
+            body="Bridge AI opportunities with practical data foundations. I use MIT-informed AI design frameworks to define behaviors, processes, and data strategies that actually ship."
+            bullets={[
+              "Define metrics & scope, align strategy (best-product vs. full-solution).",
+              "Prioritize complementary assets: process, consent, compliance, infra.",
+              "Prototype assistants, quality monitors, and analytics copilots."
+            ]}
+          />
+          {/* NEW: Fabric deep-dive */}
+          <DeepDive
+            title="Microsoft Fabric: From Concept to Governance"
+            body="I’ve recently upskilled on Microsoft Fabric to complement my Databricks and governance background—so teams can choose the right platform without bias. I focus on practical adoption: standing up lakehouses and dataflows while embedding governance from day one."
+            bullets={[
+              "OneLake & Lakehouse patterns (Bronze/Silver/Gold equivalents)",
+              "Dataflow Gen2 for ingestion/transforms; pipeline orchestration",
+              "Synapse (Fabric) & Power BI end-to-end analytics",
+              "Purview integration: catalog, lineage, data protection"
+            ]}
+          />
         </div>
       </section>
 
@@ -335,25 +363,40 @@ export default function Page() {
               company="Alberta Investment Management Corporation (AIMCo) — Canada"
               title="Manager, Data Quality & Stewardship; Data Product Delivery Lead"
               period="2024 — present"
-              items={["Implemented data governance & stewardship program.","Onboarded Atlan (catalog) and Soda (data quality).","Lead Data Product squads across analysts, devs, QA, BI, and stewards."]}
+              items={[
+                "Implemented data governance & stewardship program.",
+                "Onboarded Atlan (catalog) and Soda (data quality).",
+                "Lead Data Product squads across analysts, devs, QA, BI, and stewards."
+              ]}
             />
             <Role
               company="J.P. Morgan Asset Management — Hong Kong"
               title="VP, Chief Data Office (Promoted from Associate → VP)"
               period="2013 — 2023"
-              items={["Project management & agile delivery as Scrum Master.","Product Owner for global funds database (POM).","Launched Australia ETFs; automated market-to-reporting data flows.","Transformed 40+ VBA tools to enterprise automations (Alteryx/Xceptor).","Streamlined proxy voting for 100+ PMs; integrated with firmwide workflow."]}
+              items={[
+                "Project management & agile delivery as Scrum Master.",
+                "Product Owner for global funds database (POM).",
+                "Launched Australia ETFs; automated market-to-reporting data flows.",
+                "Transformed 40+ VBA tools to enterprise automations (Alteryx/Xceptor).",
+                "Streamlined proxy voting for 100+ PMs; integrated with firmwide workflow."
+              ]}
             />
             <Role
               company="Hong Kong Jockey Club — Hong Kong"
               title="Lead Customer Analyst"
               period="2011 — 2013"
-              items={["Predictive models with regression & inferential stats (SAS).","Built 360° customer MIS; informed campaigns with lift up to 4×."]}
+              items={[
+                "Predictive models with regression & inferential stats (SAS).",
+                "Built 360° customer MIS; informed campaigns with lift up to 4×."
+              ]}
             />
             <Role
               company="Melco-Crown Entertainment — HK/Macau"
               title="Manager, Strategic Marketing"
               period="2008 — 2011"
-              items={["Forecasting of events & segmentation; tracking creative KPIs."]}
+              items={[
+                "Forecasting of events & segmentation; tracking creative KPIs."
+              ]}
             />
           </div>
         </div>
@@ -361,10 +404,33 @@ export default function Page() {
 
       <section id="capabilities" className="mx-auto max-w-6xl px-4 py-16">
         <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Capabilities</h2>
-        <div className="mt-8 grid md:grid-cols-3 gap-6">
+        {/* Capabilities Grid (responsive 1/2/4 columns) */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <Capability title="Data Management" skills={["Governance & Stewardship","Lineage & SOR","Metadata & Catalog (Atlan)","Data Quality (Soda)"]} />
-          <Capability title="Tech & Tools" skills={["SQL, Python, Databricks","Alteryx, Xceptor","Qlik, Oracle, AWS","Azure DevOps", "JIRA/Confluence"]} />
+          <Capability
+            title="Tech & Tools"
+            skills={[
+              "SQL, Python, Databricks",
+              "Microsoft Fabric (overview)",
+              "Power BI",
+              "Azure (Purview, ADO)",
+              "Alteryx, Xceptor",
+              "Qlik, Oracle",
+              "JIRA/Confluence"
+            ]}
+          />
           <Capability title="Delivery" skills={["Agile / Scrum","PMO & OKRs","Stakeholder mgmt.","Vendor mgmt."]} />
+          {/* NEW: Dedicated Fabric capability */}
+          <Capability
+            title="Microsoft Fabric"
+            skills={[
+              "Lakehouse / OneLake",
+              "Dataflow Gen2",
+              "Synapse (Fabric)",
+              "Power BI",
+              "Purview (catalog & lineage)"
+            ]}
+          />
         </div>
       </section>
 

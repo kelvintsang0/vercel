@@ -292,7 +292,7 @@ export default function Page() {
                 <Stat label="Data Products launched" value="10+" sub="cross-functional squads" />
                 <Stat label="Automations retired VBA" value="40+" sub="legacy tools modernized" />
                 <Stat label="Quality issues managed" value="↓" sub="with governance & Atlan/Soda" />
-                <Stat label="Stakeholders aligned" value="100+" sub="PMs in global workflows" />
+                <Stat label="Stakeholders aligned" value="100+" sub="managed projects in global workflows" />
               </div>
             </div>
           </div>
@@ -315,9 +315,7 @@ export default function Page() {
             points={[
               "Lakehouse & OneLake design",
               "Dataflow Gen2 pipelines & orchestration",
-              "Synapse (Fabric) + Power BI integration",
-              "Governance & lineage with Purview"
-            ]}
+              "Synapse (Fabric) + Power BI integration"            ]}
           />
         </div>
 
@@ -348,8 +346,7 @@ export default function Page() {
             bullets={[
               "OneLake & Lakehouse patterns (Bronze/Silver/Gold equivalents)",
               "Dataflow Gen2 for ingestion/transforms; pipeline orchestration",
-              "Synapse (Fabric) & Power BI end-to-end analytics",
-              "Purview integration: catalog, lineage, data protection"
+              "Synapse (Fabric) & Power BI end-to-end analytics"
             ]}
           />
         </div>
@@ -412,14 +409,14 @@ export default function Page() {
             skills={[
               "SQL, Python, Databricks",
               "Microsoft Fabric (overview)",
-              "Power BI",
-              "Azure (Purview, ADO)",
+              "Power BI", "dbt",
+              "Azure DevOps",
               "Alteryx, Xceptor",
               "Qlik, Oracle",
               "JIRA/Confluence"
             ]}
           />
-          <Capability title="Delivery" skills={["Agile / Scrum","PMO & OKRs","Stakeholder mgmt.","Vendor mgmt."]} />
+          <Capability title="Delivery" skills={["Agile / Scrum","Waterfall", "PMO & OKRs","Stakeholder mgmt.","Vendor mgmt.", "Product Operating Model (POM)"]} />
           {/* NEW: Dedicated Fabric capability */}
           <Capability
             title="Microsoft Fabric"
@@ -427,8 +424,7 @@ export default function Page() {
               "Lakehouse / OneLake",
               "Dataflow Gen2",
               "Synapse (Fabric)",
-              "Power BI",
-              "Purview (catalog & lineage)"
+              "Power BI"
             ]}
           />
         </div>

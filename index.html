@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>InOutFlows — Data Governance & AI Operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink:       #1A1A18;
+    --ink-mid:   #3D3D3A;
+    --ink-light: #7A7A75;
+    --ink-faint: #B8B8B2;
+    --cream:     #FAF9F6;
+    --white:     #FFFFFF;
+    --rule:      #E8E7E2;
+    --teal:      #1B6B5A;
+    --teal-light:#EAF3EF;
+    --teal-mid:  #2D8A72;
+    --teal-pale: #F0F8F5;
+    --gold:      #B8873A;
+    --gold-light:#FBF5EA;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans:  'Instrument Sans', system-ui, sans-serif;
+    --max: 1180px;
+    --pad: clamp(1.5rem, 6vw, 5rem);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem var(--pad);
+    background: rgba(255,255,255,0.93);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-logo { font-family: var(--serif); font-size: 1.15rem; font-weight: 500; color: var(--ink); text-decoration: none; }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.82rem; font-weight: 400; letter-spacing: 0.03em; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-cta { font-size: 0.82rem; font-weight: 500; color: var(--white); background: var(--teal); padding: 0.55rem 1.4rem; border-radius: 3px; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--teal-mid); }
+
+  /* HERO */
+  .hero {
+    padding: 9rem var(--pad) 5rem;
+    max-width: var(--max); margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    position: relative;
+  }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.75rem; }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 1.5px; background: var(--teal); display: block; }
+  h1 { font-family: var(--serif); font-size: clamp(2.8rem, 5vw, 4.2rem); line-height: 1.1; font-weight: 400; color: var(--ink); margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+  h1 em { color: var(--teal); font-style: italic; }
+  .hero-sub { font-size: 1.05rem; color: var(--ink-mid); line-height: 1.8; max-width: 480px; margin-bottom: 2.5rem; font-weight: 300; }
+  .hero-actions { display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary { font-size: 0.85rem; font-weight: 500; color: var(--white); background: var(--teal); padding: 0.9rem 2.2rem; border-radius: 3px; text-decoration: none; letter-spacing: 0.03em; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-primary:hover { background: var(--teal-mid); transform: translateY(-1px); }
+  .btn-outline { font-size: 0.85rem; font-weight: 400; color: var(--ink-mid); border: 1px solid var(--rule); padding: 0.9rem 2rem; border-radius: 3px; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* HERO GRAPHIC PANEL */
+  .hero-graphic { position: relative; display: flex; align-items: center; justify-content: center; }
+  .hero-svg-wrap { width: 100%; max-width: 480px; }
+
+  /* STATS STRIP */
+  .stats-strip { background: var(--cream); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 2.5rem var(--pad); }
+  .stats-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; }
+  .stat-item { text-align: center; }
+  .stat-num { font-family: var(--serif); font-size: 2.4rem; font-weight: 400; color: var(--ink); line-height: 1; margin-bottom: 0.3rem; }
+  .stat-num sup { font-size: 1rem; color: var(--teal); vertical-align: super; }
+  .stat-label { font-size: 0.78rem; color: var(--ink-light); line-height: 1.45; }
+  .cred-bar { border-top: 1px solid var(--rule); margin-top: 2rem; padding-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+  .cred-pill { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.05em; color: var(--teal); background: var(--teal-light); padding: 0.28rem 0.7rem; border-radius: 2px; }
+
+  /* SECTION BASE */
+  section { padding: 6rem var(--pad); max-width: var(--max); margin: 0 auto; }
+  .section-eyebrow { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.6rem; }
+  .section-eyebrow::before { content: ''; width: 18px; height: 1.5px; background: var(--teal); display: block; }
+  h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; line-height: 1.15; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 1rem; }
+  h2 em { color: var(--teal); font-style: italic; }
+  .section-intro { font-size: 1rem; color: var(--ink-mid); max-width: 540px; line-height: 1.8; margin-bottom: 3.5rem; }
+
+  /* PROBLEM */
+  .problem-section { background: var(--cream); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 5rem var(--pad); }
+  .problem-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: center; }
+  .problem-cards { display: flex; flex-direction: column; gap: 1rem; }
+  .problem-card { background: var(--white); border: 1px solid var(--rule); border-radius: 4px; padding: 1.5rem 1.75rem; }
+  .problem-q { font-family: var(--serif); font-size: 0.98rem; font-style: italic; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.45; }
+  .problem-a { font-size: 0.82rem; color: var(--ink-mid); line-height: 1.75; }
+
+  /* SERVICES */
+  .services-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+  .service-card { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; background: var(--white); transition: border-color 0.3s, box-shadow 0.3s; }
+  .service-card:hover { border-color: var(--teal); box-shadow: 0 4px 24px rgba(27,107,90,0.07); }
+  .service-graphic { background: var(--teal-pale); padding: 2rem; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--rule); }
+  .service-body { padding: 2rem 2.25rem 2.25rem; }
+  .service-num { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.75rem; }
+  .service-name { font-family: var(--serif); font-size: 1.45rem; font-weight: 400; color: var(--ink); margin-bottom: 0.65rem; line-height: 1.25; }
+  .service-desc { font-size: 0.85rem; color: var(--ink-mid); line-height: 1.8; margin-bottom: 1.25rem; }
+  .service-deliverables { list-style: none; margin-bottom: 1.25rem; }
+  .service-deliverables li { font-size: 0.79rem; color: var(--ink-mid); padding: 0.4rem 0; border-top: 1px solid var(--rule); display: flex; gap: 0.7rem; line-height: 1.5; }
+  .service-deliverables li::before { content: '→'; color: var(--teal); flex-shrink: 0; font-size: 0.75rem; margin-top: 1px; }
+  .service-price { border-top: 1px solid var(--rule); padding-top: 0.85rem; font-size: 0.78rem; font-weight: 500; color: var(--teal); }
+
+  /* PROCESS */
+  .process-wrap { background: var(--cream); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .process-inner { max-width: var(--max); margin: 0 auto; padding: 5rem var(--pad); display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; align-items: center; }
+  .process-steps { display: flex; flex-direction: column; gap: 0; }
+  .process-step { display: flex; gap: 1.5rem; padding: 1.5rem 0; border-top: 1px solid var(--rule); align-items: flex-start; }
+  .process-num { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; color: var(--ink-faint); line-height: 1; flex-shrink: 0; width: 2rem; }
+  .process-name { font-size: 0.9rem; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .process-desc { font-size: 0.8rem; color: var(--ink-mid); line-height: 1.75; }
+
+  /* FOUNDER */
+  .founder-header { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 2rem; }
+  .founder-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--teal-light); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .founder-avatar-initials { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; color: var(--teal); }
+  .founder-name { font-family: var(--serif); font-size: 1.35rem; font-weight: 400; color: var(--ink); margin-bottom: 0.2rem; }
+  .founder-creds { font-size: 0.73rem; color: var(--teal); font-weight: 500; letter-spacing: 0.04em; }
+  .founder-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .founder-bio p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1.25rem; font-weight: 300; }
+  .founder-bio p strong { color: var(--ink); font-weight: 500; }
+  .timeline { }
+  .tl-item { display: grid; grid-template-columns: 110px 1fr; gap: 1.5rem; padding: 1.1rem 0; border-top: 1px solid var(--rule); }
+  .tl-date { font-size: 0.72rem; color: var(--ink-faint); padding-top: 3px; line-height: 1.5; }
+  .tl-role { font-size: 0.87rem; font-weight: 500; color: var(--ink); margin-bottom: 0.15rem; }
+  .tl-org { font-size: 0.77rem; color: var(--teal); }
+
+  /* PLATFORM */
+  .platform-box { background: var(--cream); border: 1px solid var(--rule); border-radius: 6px; padding: 3.5rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start; }
+  .platform-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); background: var(--gold-light); border: 1px solid rgba(184,135,58,0.2); padding: 0.3rem 0.85rem; border-radius: 2px; margin-bottom: 1.25rem; }
+  .platform-badge::before { content: '●'; font-size: 0.45rem; animation: blink 2s ease-in-out infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+  .platform-title { font-family: var(--serif); font-size: 2rem; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 0.75rem; }
+  .platform-desc { font-size: 0.88rem; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1.75rem; }
+  .platform-features { list-style: none; }
+  .platform-features li { font-size: 0.82rem; color: var(--ink-mid); padding: 0.55rem 0; border-top: 1px solid var(--rule); display: flex; gap: 0.75rem; line-height: 1.5; }
+  .platform-features li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 6px; }
+  .waitlist-card { background: var(--white); border: 1px solid var(--rule); border-radius: 4px; padding: 2rem; }
+  .waitlist-title { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); margin-bottom: 0.75rem; }
+  .waitlist-desc { font-size: 0.82rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1.5rem; }
+  .waitlist-form { display: flex; flex-direction: column; gap: 0.75rem; }
+  .waitlist-form input { background: var(--cream); border: 1px solid var(--rule); border-radius: 3px; padding: 0.75rem 1rem; font-family: var(--sans); font-size: 0.85rem; color: var(--ink); outline: none; transition: border-color 0.2s; width: 100%; }
+  .waitlist-form input::placeholder { color: var(--ink-faint); }
+  .waitlist-form input:focus { border-color: var(--teal); }
+  .waitlist-form button { background: var(--teal); color: var(--white); border: none; border-radius: 3px; font-family: var(--sans); font-size: 0.82rem; font-weight: 500; padding: 0.85rem; cursor: pointer; transition: background 0.2s; }
+  .waitlist-form button:hover { background: var(--teal-mid); }
+
+  /* CONTACT */
+  .contact-wrap { background: var(--cream); border-top: 1px solid var(--rule); padding: 6rem var(--pad); }
+  .contact-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: 6rem; align-items: start; }
+  .contact-meta p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.85; margin-bottom: 2rem; }
+  .contact-detail { padding: 1.1rem 0; border-top: 1px solid var(--rule); }
+  .contact-detail-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem; }
+  .contact-detail-val { font-size: 0.9rem; color: var(--ink); }
+  .contact-detail-val a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); transition: border-color 0.2s; }
+  .contact-detail-val a:hover { border-color: var(--teal); }
+  .contact-form { display: flex; flex-direction: column; gap: 0.85rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+  .contact-form input, .contact-form textarea, .contact-form select { background: var(--white); border: 1px solid var(--rule); border-radius: 3px; padding: 0.85rem 1rem; font-family: var(--sans); font-size: 0.85rem; color: var(--ink); outline: none; transition: border-color 0.2s; width: 100%; }
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--ink-faint); }
+  .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color: var(--teal); }
+  .contact-form textarea { resize: vertical; min-height: 130px; }
+  .contact-form select { color: var(--ink-mid); }
+  .contact-form button { background: var(--teal); color: var(--white); border: none; border-radius: 3px; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; padding: 1rem 2.5rem; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
+  .contact-form button:hover { background: var(--teal-mid); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--rule); padding: 2rem var(--pad); max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-logo { font-family: var(--serif); font-size: 1rem; color: var(--ink-mid); }
+  footer p { font-size: 0.75rem; color: var(--ink-faint); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* MOBILE */
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; padding-top: 7rem; }
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    .problem-inner { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .process-inner { grid-template-columns: 1fr; }
+    .founder-layout { grid-template-columns: 1fr; }
+    .platform-box { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">InOut<span>Flows</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How we work</a></li>
+    <li><a href="#founder">About</a></li>
+    <li><a href="#platform">Platform</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Work with us</a>
+</nav>
+
+<!-- HERO -->
+<div style="max-width:var(--max);margin:0 auto;">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">Data Governance & AI Operations · Vancouver, BC</div>
+      <h1>Making your data<br/><em>trustworthy</em><br/>for the AI era.</h1>
+      <p class="hero-sub">InOutFlows helps regulated mid-market organizations build governance foundations that make data reliable, auditable, and AI-ready — before costly initiatives stall on bad data.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Start a conversation</a>
+        <a href="#services" class="btn-outline">Our services</a>
+      </div>
+    </div>
+    <!-- HERO ILLUSTRATION: data flow / governance network -->
+    <div class="hero-graphic reveal">
+      <svg class="hero-svg-wrap" viewBox="0 0 420 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Background grid -->
+        <defs>
+          <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+            <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#E8E7E2" stroke-width="0.5"/>
+          </pattern>
+          <marker id="ah" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M1 1L6 4L1 7" fill="none" stroke="#1B6B5A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+          <marker id="ah2" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M1 1L6 4L1 7" fill="none" stroke="#B8B8B2" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <rect width="420" height="380" fill="url(#grid)"/>
+
+        <!-- Source nodes (left column) -->
+        <rect x="20" y="60" width="80" height="36" rx="4" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="1"/>
+        <text x="60" y="82" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="10" fill="#1B6B5A" font-weight="500">ERP / CRM</text>
+
+        <rect x="20" y="130" width="80" height="36" rx="4" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="1"/>
+        <text x="60" y="152" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="10" fill="#1B6B5A" font-weight="500">Market data</text>
+
+        <rect x="20" y="200" width="80" height="36" rx="4" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="1"/>
+        <text x="60" y="222" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="10" fill="#1B6B5A" font-weight="500">Ops systems</text>
+
+        <rect x="20" y="270" width="80" height="36" rx="4" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="1"/>
+        <text x="60" y="292" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="10" fill="#1B6B5A" font-weight="500">Files / APIs</text>
+
+        <!-- Connector lines to central hub -->
+        <line x1="100" y1="78" x2="170" y2="140" stroke="#1B6B5A" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#ah)"/>
+        <line x1="100" y1="148" x2="170" y2="163" stroke="#1B6B5A" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#ah)"/>
+        <line x1="100" y1="218" x2="170" y2="180" stroke="#1B6B5A" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#ah)"/>
+        <line x1="100" y1="288" x2="170" y2="200" stroke="#1B6B5A" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#ah)"/>
+
+        <!-- Central governance hub -->
+        <rect x="170" y="110" width="110" height="110" rx="10" fill="#1B6B5A" stroke="none"/>
+        <text x="225" y="154" text-anchor="middle" font-family="'Playfair Display',serif" font-size="12" fill="white" font-weight="400">Governed</text>
+        <text x="225" y="170" text-anchor="middle" font-family="'Playfair Display',serif" font-size="12" fill="white" font-weight="400">data layer</text>
+        <!-- Small icon lines inside hub -->
+        <line x1="198" y1="185" x2="252" y2="185" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="198" y1="195" x2="235" y2="195" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <line x1="198" y1="205" x2="245" y2="205" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+        <!-- Quality badge on hub -->
+        <circle cx="280" cy="115" r="18" fill="#FAF9F6" stroke="#E8E7E2" stroke-width="1"/>
+        <text x="280" y="112" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#1B6B5A" font-weight="500">DQ</text>
+        <text x="280" y="123" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#1B6B5A" font-weight="500">Score</text>
+
+        <!-- Lineage badge -->
+        <circle cx="165" cy="108" r="18" fill="#FAF9F6" stroke="#E8E7E2" stroke-width="1"/>
+        <text x="165" y="105" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#1B6B5A" font-weight="500">Meta</text>
+        <text x="165" y="116" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#1B6B5A" font-weight="500">data</text>
+
+        <!-- Output nodes (right column) -->
+        <rect x="320" y="80" width="85" height="36" rx="4" fill="#FAF9F6" stroke="#E8E7E2" stroke-width="1"/>
+        <text x="362" y="97" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="9.5" fill="#3D3D3A" font-weight="500">AI / ML models</text>
+        <text x="362" y="110" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8.5" fill="#7A7A75">trusted inputs</text>
+
+        <rect x="320" y="150" width="85" height="36" rx="4" fill="#FAF9F6" stroke="#E8E7E2" stroke-width="1"/>
+        <text x="362" y="167" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="9.5" fill="#3D3D3A" font-weight="500">Reporting</text>
+        <text x="362" y="180" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8.5" fill="#7A7A75">audit-ready</text>
+
+        <rect x="320" y="220" width="85" height="36" rx="4" fill="#FAF9F6" stroke="#E8E7E2" stroke-width="1"/>
+        <text x="362" y="237" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="9.5" fill="#3D3D3A" font-weight="500">Compliance</text>
+        <text x="362" y="250" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8.5" fill="#7A7A75">risk controls</text>
+
+        <!-- Lines from hub to outputs -->
+        <line x1="280" y1="148" x2="320" y2="115" stroke="#B8B8B2" stroke-width="1" marker-end="url(#ah2)"/>
+        <line x1="280" y1="168" x2="320" y2="168" stroke="#B8B8B2" stroke-width="1" marker-end="url(#ah2)"/>
+        <line x1="280" y1="188" x2="320" y2="230" stroke="#B8B8B2" stroke-width="1" marker-end="url(#ah2)"/>
+
+        <!-- Governance label strip at bottom -->
+        <rect x="20" y="335" width="380" height="28" rx="4" fill="#EAF3EF" stroke="none"/>
+        <text x="56" y="352" font-family="'Instrument Sans',sans-serif" font-size="8.5" fill="#1B6B5A" font-weight="500">DAMA-DMBOK2</text>
+        <text x="170" y="352" font-family="'Instrument Sans',sans-serif" font-size="8.5" fill="#1B6B5A" font-weight="500">Atlan · Soda</text>
+        <text x="265" y="352" font-family="'Instrument Sans',sans-serif" font-size="8.5" fill="#1B6B5A" font-weight="500">Databricks · dbt</text>
+        <text x="365" y="352" font-family="'Instrument Sans',sans-serif" font-size="8.5" fill="#1B6B5A" font-weight="500">MS Fabric</text>
+
+        <!-- Animated pulse on hub -->
+        <circle cx="225" cy="165" r="60" fill="none" stroke="#1B6B5A" stroke-width="0.5" opacity="0.2">
+          <animate attributeName="r" values="55;70;55" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.2;0;0.2" dur="3s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div style="max-width:var(--max);margin:0 auto;">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-num">20<sup>+</sup></div>
+        <div class="stat-label">Years in enterprise data platforms</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">40<sup>+</sup></div>
+        <div class="stat-label">Legacy workflows modernized</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">10<sup>+</sup></div>
+        <div class="stat-label">Data products delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100<sup>+</sup></div>
+        <div class="stat-label">Stakeholders aligned globally</div>
+      </div>
+    </div>
+    <div class="cred-bar">
+      <span class="cred-pill">CDMP Practitioner</span>
+      <span class="cred-pill">PMP</span>
+      <span class="cred-pill">MBA · Schulich</span>
+      <span class="cred-pill">BSc Computer Science · UBC</span>
+      <span class="cred-pill">AWS CCP</span>
+      <span class="cred-pill">PSM I</span>
+      <span class="cred-pill">AIGP in progress</span>
+      <span class="cred-pill">J.P. Morgan</span>
+      <span class="cred-pill">AIMCo</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div class="problem-section">
+  <div class="problem-inner">
+    <!-- Left: illustration of broken data -->
+    <div class="reveal" style="display:flex;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 300 320" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;" aria-hidden="true">
+        <!-- Messy ungoverned state -->
+        <text x="150" y="28" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="9" fill="#B8B8B2" letter-spacing="0.1em" font-weight="500">WITHOUT GOVERNANCE</text>
+        <!-- Scattered data nodes -->
+        <circle cx="60" cy="80" r="22" fill="#FBF5EA" stroke="#E8C87A" stroke-width="1"/>
+        <text x="60" y="84" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#B8873A">stale</text>
+        <circle cx="160" cy="60" r="22" fill="#FBF5EA" stroke="#E8C87A" stroke-width="1"/>
+        <text x="160" y="64" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#B8873A">duplicate</text>
+        <circle cx="240" cy="100" r="22" fill="#FBF5EA" stroke="#E8C87A" stroke-width="1"/>
+        <text x="240" y="104" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#B8873A">no lineage</text>
+        <circle cx="90" cy="160" r="22" fill="#FBF5EA" stroke="#E8C87A" stroke-width="1"/>
+        <text x="90" y="164" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#B8873A">siloed</text>
+        <circle cx="200" cy="170" r="22" fill="#FBF5EA" stroke="#E8C87A" stroke-width="1"/>
+        <text x="200" y="174" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#B8873A">untracked</text>
+        <!-- Chaotic connector lines -->
+        <line x1="82" y1="80" x2="138" y2="65" stroke="#E8C87A" stroke-width="0.75" stroke-dasharray="3 3"/>
+        <line x1="182" y1="68" x2="220" y2="90" stroke="#E8C87A" stroke-width="0.75" stroke-dasharray="3 3"/>
+        <line x1="60" y1="102" x2="70" y2="138" stroke="#E8C87A" stroke-width="0.75" stroke-dasharray="3 3"/>
+        <line x1="218" y1="108" x2="215" y2="148" stroke="#E8C87A" stroke-width="0.75" stroke-dasharray="3 3"/>
+        <line x1="112" y1="155" x2="178" y2="162" stroke="#E8C87A" stroke-width="0.75" stroke-dasharray="3 3"/>
+        <!-- X marks -->
+        <text x="148" y="125" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#E8C87A" opacity="0.5">✕</text>
+
+        <!-- Divider arrow -->
+        <text x="150" y="230" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="9" fill="#1B6B5A" letter-spacing="0.1em" font-weight="500">WITH INOUTFLOWS</text>
+        <!-- Clean governed state -->
+        <rect x="90" y="245" width="120" height="50" rx="6" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="1"/>
+        <text x="150" y="266" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" fill="#1B6B5A">Trusted · Lineaged</text>
+        <text x="150" y="282" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8.5" fill="#2D8A72">Auditable · AI-ready</text>
+        <!-- Check marks -->
+        <circle cx="80" cy="270" r="14" fill="#1B6B5A"/>
+        <text x="80" y="275" text-anchor="middle" font-family="sans-serif" font-size="12" fill="white">✓</text>
+        <circle cx="220" cy="270" r="14" fill="#1B6B5A"/>
+        <text x="220" y="275" text-anchor="middle" font-family="sans-serif" font-size="12" fill="white">✓</text>
+      </svg>
+    </div>
+    <!-- Right: problem cards -->
+    <div>
+      <div class="section-eyebrow">The challenge</div>
+      <h2>Sound<br/><em>familiar?</em></h2>
+      <div class="problem-cards">
+        <div class="problem-card reveal">
+          <div class="problem-q">"We're investing in AI but our underlying data quality is unreliable."</div>
+          <div class="problem-a">AI models inherit the flaws in the data they're trained on. We build the governance layer that makes your data trustworthy before your initiative is compromised.</div>
+        </div>
+        <div class="problem-card reveal">
+          <div class="problem-q">"We know governance matters but don't know where to start."</div>
+          <div class="problem-a">We assess your current state, identify your highest-risk gaps, and deliver a prioritized roadmap — tailored to your organization, not a generic template.</div>
+        </div>
+        <div class="problem-card reveal">
+          <div class="problem-q">"Our team lacks the seniority and bandwidth to lead this properly."</div>
+          <div class="problem-a">We embed experienced governance leadership on a retainer basis — standing up stewardship programs, catalog tooling, and operating models that your team can sustain.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-eyebrow">What we do</div>
+  <h2>Three ways we<br/><em>deliver value</em></h2>
+  <p class="section-intro">Scoped, time-boxed engagements built to leave your team stronger — not dependent on us indefinitely.</p>
+  <div class="services-grid">
+
+    <!-- Service 1 -->
+    <div class="service-card reveal">
+      <div class="service-graphic">
+        <svg viewBox="0 0 280 100" fill="none" style="width:100%;max-width:280px;" aria-hidden="true">
+          <!-- Maturity bar chart illustration -->
+          <rect x="20" y="65" width="28" height="25" rx="2" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <rect x="62" y="45" width="28" height="45" rx="2" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <rect x="104" y="30" width="28" height="60" rx="2" fill="#2D8A72" stroke="none"/>
+          <rect x="146" y="50" width="28" height="40" rx="2" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <rect x="188" y="20" width="28" height="70" rx="2" fill="#1B6B5A" stroke="none"/>
+          <text x="34" y="96" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#B8B8B2">MDM</text>
+          <text x="76" y="96" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#B8B8B2">Lineage</text>
+          <text x="118" y="96" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#2D8A72">Quality</text>
+          <text x="160" y="96" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#B8B8B2">Policy</text>
+          <text x="202" y="96" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#1B6B5A">AI ready</text>
+          <!-- Score badge -->
+          <rect x="232" y="15" width="40" height="40" rx="20" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="1"/>
+          <text x="252" y="33" text-anchor="middle" font-family="'Playfair Display',serif" font-size="13" fill="#1B6B5A">72</text>
+          <text x="252" y="46" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="6.5" fill="#2D8A72">/100</text>
+        </svg>
+      </div>
+      <div class="service-body">
+        <div class="service-num">01 — Assessment</div>
+        <div class="service-name">GovernReady Audit</div>
+        <div class="service-desc">A structured 4–6 week diagnostic of your governance posture — metadata, data quality, lineage, compliance, and AI readiness — culminating in a scored report and prioritized remediation roadmap.</div>
+        <ul class="service-deliverables">
+          <li>Governance maturity scorecard (DAMA-DMBOK2)</li>
+          <li>AI readiness rating with specific risk flags</li>
+          <li>Prioritized 90-day remediation roadmap</li>
+          <li>Executive presentation deck</li>
+        </ul>
+        <div class="service-price">Fixed scope · $8,000 – $15,000 CAD</div>
+      </div>
+    </div>
+
+    <!-- Service 2 -->
+    <div class="service-card reveal">
+      <div class="service-graphic">
+        <svg viewBox="0 0 280 100" fill="none" style="width:100%;max-width:280px;" aria-hidden="true">
+          <!-- Retainer / ongoing cycle -->
+          <circle cx="90" cy="50" r="35" fill="none" stroke="#E8E7E2" stroke-width="1"/>
+          <circle cx="90" cy="50" r="35" fill="none" stroke="#1B6B5A" stroke-width="2" stroke-dasharray="55 165" stroke-dashoffset="-20">
+            <animateTransform attributeName="transform" type="rotate" from="0 90 50" to="360 90 50" dur="8s" repeatCount="indefinite"/>
+          </circle>
+          <text x="90" y="45" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" fill="#1B6B5A">Ongoing</text>
+          <text x="90" y="60" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8.5" fill="#3D3D3A">stewardship</text>
+          <!-- Monthly pillars -->
+          <rect x="155" y="20" width="36" height="18" rx="3" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <text x="173" y="32" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#1B6B5A">Catalog</text>
+          <rect x="200" y="20" width="36" height="18" rx="3" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <text x="218" y="32" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#1B6B5A">Quality</text>
+          <rect x="155" y="48" width="36" height="18" rx="3" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <text x="173" y="60" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#1B6B5A">Policy</text>
+          <rect x="200" y="48" width="36" height="18" rx="3" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <text x="218" y="60" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#1B6B5A">Reporting</text>
+          <rect x="177" y="76" width="36" height="18" rx="3" fill="#1B6B5A" stroke="none"/>
+          <text x="195" y="88" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="white">Atlan · Soda</text>
+        </svg>
+      </div>
+      <div class="service-body">
+        <div class="service-num">02 — Retainer</div>
+        <div class="service-name">DataSteward Retainer</div>
+        <div class="service-desc">Embedded governance leadership on a monthly basis. We act as your fractional data governance function — running stewardship programs, onboarding tooling, and building operating models that stick.</div>
+        <ul class="service-deliverables">
+          <li>Weekly governance working sessions</li>
+          <li>Metadata catalog setup & ongoing stewardship</li>
+          <li>Data quality monitoring & alerting</li>
+          <li>Policy authoring and SOP development</li>
+        </ul>
+        <div class="service-price">Ongoing · from $8,000 / month CAD</div>
+      </div>
+    </div>
+
+    <!-- Service 3 -->
+    <div class="service-card reveal">
+      <div class="service-graphic">
+        <svg viewBox="0 0 280 100" fill="none" style="width:100%;max-width:280px;" aria-hidden="true">
+          <!-- Pipeline architecture layers -->
+          <rect x="20" y="70" width="240" height="18" rx="3" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <text x="140" y="82" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">Bronze — Raw ingestion</text>
+          <rect x="35" y="48" width="210" height="18" rx="3" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="1"/>
+          <text x="140" y="60" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">Silver — Cleansed & validated</text>
+          <rect x="55" y="26" width="170" height="18" rx="3" fill="#1B6B5A" stroke="none"/>
+          <text x="140" y="38" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="white" font-weight="500">Gold — Governed, AI-ready</text>
+          <!-- Tool labels -->
+          <text x="22" y="16" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#B8B8B2">Databricks</text>
+          <text x="85" y="16" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#B8B8B2">MS Fabric</text>
+          <text x="148" y="16" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#B8B8B2">dbt</text>
+          <text x="185" y="16" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#B8B8B2">Power BI</text>
+          <text x="230" y="16" font-family="'Instrument Sans',sans-serif" font-size="7" fill="#B8B8B2">Soda</text>
+        </svg>
+      </div>
+      <div class="service-body">
+        <div class="service-num">03 — Delivery</div>
+        <div class="service-name">Data Platform Build</div>
+        <div class="service-desc">End-to-end delivery of a modern lakehouse platform with governance embedded from the start — on Databricks or Microsoft Fabric, with dbt, Soda, and your reporting layer of choice.</div>
+        <ul class="service-deliverables">
+          <li>Lakehouse architecture (Bronze / Silver / Gold)</li>
+          <li>ETL/ELT pipelines with dbt transformation layer</li>
+          <li>Embedded data quality controls with Soda</li>
+          <li>Power BI or Qlik reporting layer</li>
+        </ul>
+        <div class="service-price">Project-based · scoped on engagement</div>
+      </div>
+    </div>
+
+    <!-- Service 4 -->
+    <div class="service-card reveal">
+      <div class="service-graphic">
+        <svg viewBox="0 0 280 100" fill="none" style="width:100%;max-width:280px;" aria-hidden="true">
+          <!-- Workshop / people learning illustration -->
+          <!-- Whiteboard -->
+          <rect x="90" y="15" width="110" height="60" rx="4" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="1"/>
+          <line x1="105" y1="35" x2="185" y2="35" stroke="#1B6B5A" stroke-width="0.75"/>
+          <line x1="105" y1="47" x2="170" y2="47" stroke="#1B6B5A" stroke-width="0.75"/>
+          <line x1="105" y1="59" x2="180" y2="59" stroke="#1B6B5A" stroke-width="0.75"/>
+          <circle cx="113" cy="35" r="3" fill="#1B6B5A"/>
+          <circle cx="113" cy="47" r="3" fill="#2D8A72"/>
+          <circle cx="113" cy="59" r="3" fill="#1B6B5A"/>
+          <text x="145" y="22" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#1B6B5A" font-weight="500">DAMA-DMBOK2</text>
+          <!-- Attendee dots -->
+          <circle cx="30" cy="75" r="10" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <circle cx="55" cy="75" r="10" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <circle cx="220" cy="75" r="10" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <circle cx="245" cy="75" r="10" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <circle cx="30" cy="40" r="10" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <circle cx="55" cy="40" r="10" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <circle cx="220" cy="40" r="10" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <circle cx="245" cy="40" r="10" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+          <!-- Certificate badge -->
+          <rect x="112" y="82" width="56" height="16" rx="3" fill="#1B6B5A"/>
+          <text x="140" y="93" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7" fill="white" font-weight="500">Certified team</text>
+        </svg>
+      </div>
+      <div class="service-body">
+        <div class="service-num">04 — Training</div>
+        <div class="service-name">Stewardship Workshop</div>
+        <div class="service-desc">A one or two-day hands-on workshop that builds real governance capability in your team — calibrated to your tools and data environment, not a classroom lecture on theory.</div>
+        <ul class="service-deliverables">
+          <li>DAMA-DMBOK2 applied to your specific context</li>
+          <li>Hands-on sessions with Atlan and Soda</li>
+          <li>Stewardship roles, RACI, and escalation design</li>
+          <li>Take-home playbook and policy templates</li>
+        </ul>
+        <div class="service-price">Workshop · $4,000 – $8,000 CAD / day</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<div class="process-wrap" id="how">
+  <div class="process-inner">
+    <div>
+      <div class="section-eyebrow">How we work</div>
+      <h2>Simple, structured,<br/><em>no surprises.</em></h2>
+      <p style="font-size:0.92rem;color:var(--ink-mid);line-height:1.8;margin-top:0.5rem;">Every engagement follows the same four-step structure — so you always know where you stand and what comes next.</p>
+    </div>
+    <!-- Process illustration -->
+    <div>
+      <svg viewBox="0 0 480 200" fill="none" style="width:100%;" aria-hidden="true">
+        <defs>
+          <marker id="pa" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M1 1L6 4L1 7" fill="none" stroke="#1B6B5A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <!-- Step boxes -->
+        <rect x="10" y="60" width="90" height="80" rx="6" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="1"/>
+        <text x="55" y="88" text-anchor="middle" font-family="'Playfair Display',serif" font-size="22" fill="#1B6B5A" opacity="0.25">01</text>
+        <text x="55" y="110" text-anchor="middle" font-family="'Playfair Display',serif" font-size="13" fill="#1B6B5A">Discover</text>
+        <text x="55" y="125" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#3D3D3A">30-min call</text>
+
+        <line x1="100" y1="100" x2="130" y2="100" stroke="#1B6B5A" stroke-width="1" marker-end="url(#pa)"/>
+
+        <rect x="130" y="60" width="90" height="80" rx="6" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="1"/>
+        <text x="175" y="88" text-anchor="middle" font-family="'Playfair Display',serif" font-size="22" fill="#1B6B5A" opacity="0.25">02</text>
+        <text x="175" y="110" text-anchor="middle" font-family="'Playfair Display',serif" font-size="13" fill="#1B6B5A">Scope</text>
+        <text x="175" y="125" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#3D3D3A">Fixed proposal</text>
+
+        <line x1="220" y1="100" x2="250" y2="100" stroke="#1B6B5A" stroke-width="1" marker-end="url(#pa)"/>
+
+        <rect x="250" y="60" width="90" height="80" rx="6" fill="#1B6B5A" stroke="none"/>
+        <text x="295" y="88" text-anchor="middle" font-family="'Playfair Display',serif" font-size="22" fill="white" opacity="0.2">03</text>
+        <text x="295" y="110" text-anchor="middle" font-family="'Playfair Display',serif" font-size="13" fill="white">Deliver</text>
+        <text x="295" y="125" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="rgba(255,255,255,0.75)">Agile sprints</text>
+
+        <line x1="340" y1="100" x2="370" y2="100" stroke="#1B6B5A" stroke-width="1" marker-end="url(#pa)"/>
+
+        <rect x="370" y="60" width="100" height="80" rx="6" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="1"/>
+        <text x="420" y="88" text-anchor="middle" font-family="'Playfair Display',serif" font-size="22" fill="#1B6B5A" opacity="0.25">04</text>
+        <text x="420" y="110" text-anchor="middle" font-family="'Playfair Display',serif" font-size="13" fill="#1B6B5A">Transfer</text>
+        <text x="420" y="125" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#3D3D3A">Your team owns it</text>
+
+        <!-- Subtitle row -->
+        <text x="55" y="170" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#B8B8B2">Listen first</text>
+        <text x="175" y="170" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#B8B8B2">No surprises</text>
+        <text x="295" y="170" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#B8B8B2">Weekly visibility</text>
+        <text x="420" y="170" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="7.5" fill="#B8B8B2">No dependency</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- FOUNDER -->
+<section id="founder">
+  <div class="section-eyebrow">The founder</div>
+  <div class="founder-layout">
+    <div class="reveal">
+      <div class="founder-header">
+        <div class="founder-avatar"><div class="founder-avatar-initials">KT</div></div>
+        <div>
+          <div class="founder-name">Kelvin Tsang</div>
+          <div class="founder-creds">PMP · CDMP Practitioner · MBA · PSM I · AWS CCP</div>
+        </div>
+      </div>
+      <div class="founder-bio">
+        <p>InOutFlows is built on <strong>20 years of enterprise data experience</strong> in investment management, analytics, and AI-driven operations — at institutions where governance wasn't optional, it was regulatory and reputational.</p>
+        <p>As <strong>VP, Chief Data Office at J.P. Morgan Asset Management</strong> in Hong Kong, Kelvin led data governance across APAC — aligning cross-border privacy rules, audit frameworks, and operational reporting for one of the world's largest asset managers. Promoted three times over 10 years.</p>
+        <p>At <strong>AIMCo</strong>, he directed the enterprise rollout of Atlan and Soda, designed data quality scorecards and stewardship operating models, and led a 10-person cross-functional data product delivery team — promoted to management within two months of joining.</p>
+        <p>He holds a <strong>CDMP Practitioner</strong> designation, PMP, MBA from Schulich (York University), and an Honours BSc in Computer Science from UBC. Currently completing the <strong>AI Governance Professional (AIGP)</strong> certification and an MIT certificate in AI product design.</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <!-- Credential / tool ecosystem graphic -->
+      <svg viewBox="0 0 340 300" fill="none" style="width:100%;max-width:340px;margin-bottom:2rem;" aria-hidden="true">
+        <text x="170" y="22" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8.5" fill="#B8B8B2" letter-spacing="0.1em" font-weight="500">TOOLS & FRAMEWORKS</text>
+        <!-- Central node -->
+        <circle cx="170" cy="155" r="42" fill="#1B6B5A"/>
+        <text x="170" y="150" text-anchor="middle" font-family="'Playfair Display',serif" font-size="12" fill="white">InOut</text>
+        <text x="170" y="166" text-anchor="middle" font-family="'Playfair Display',serif" font-size="12" fill="white">Flows</text>
+        <!-- Surrounding tool nodes -->
+        <circle cx="170" cy="55" r="28" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+        <text x="170" y="51" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">DAMA</text>
+        <text x="170" y="63" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">DMBOK2</text>
+
+        <circle cx="280" cy="100" r="28" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+        <text x="280" y="96" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">Atlan</text>
+        <text x="280" y="108" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">Soda</text>
+
+        <circle cx="300" cy="200" r="28" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+        <text x="300" y="196" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">MS</text>
+        <text x="300" y="208" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">Fabric</text>
+
+        <circle cx="210" cy="268" r="28" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+        <text x="210" y="264" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">dbt</text>
+        <text x="210" y="276" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">Power BI</text>
+
+        <circle cx="115" cy="268" r="28" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+        <text x="115" y="264" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">Data</text>
+        <text x="115" y="276" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">bricks</text>
+
+        <circle cx="45" cy="200" r="28" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+        <text x="45" y="196" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">SQL</text>
+        <text x="45" y="208" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">Python</text>
+
+        <circle cx="60" cy="100" r="28" fill="#EAF3EF" stroke="#1B6B5A" stroke-width="0.75"/>
+        <text x="60" y="96" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">Agile</text>
+        <text x="60" y="108" text-anchor="middle" font-family="'Instrument Sans',sans-serif" font-size="8" fill="#1B6B5A" font-weight="500">PMP</text>
+
+        <!-- Spokes -->
+        <line x1="170" y1="113" x2="170" y2="83" stroke="#E8E7E2" stroke-width="1"/>
+        <line x1="205" y1="122" x2="253" y2="115" stroke="#E8E7E2" stroke-width="1"/>
+        <line x1="210" y1="150" x2="271" y2="178" stroke="#E8E7E2" stroke-width="1"/>
+        <line x1="200" y1="191" x2="215" y2="240" stroke="#E8E7E2" stroke-width="1"/>
+        <line x1="150" y1="195" x2="130" y2="240" stroke="#E8E7E2" stroke-width="1"/>
+        <line x1="130" y1="165" x2="73" y2="188" stroke="#E8E7E2" stroke-width="1"/>
+        <line x1="132" y1="130" x2="88" y2="113" stroke="#E8E7E2" stroke-width="1"/>
+      </svg>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">2025 – now</div>
+          <div><div class="tl-role">Manager, Data Infrastructure</div><div class="tl-org">Vancouver Fraser Port Authority</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024 – 2025</div>
+          <div><div class="tl-role">Manager, Data Quality & Stewardship</div><div class="tl-org">AIMCo — Alberta Investment Management Corp</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2013 – 2023</div>
+          <div><div class="tl-role">VP, Chief Data Office</div><div class="tl-org">J.P. Morgan Asset Management, Hong Kong</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2011 – 2013</div>
+          <div><div class="tl-role">Lead Customer Analyst</div><div class="tl-org">Hong Kong Jockey Club</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM -->
+<section id="platform" style="padding-top:0;">
+  <div class="platform-box reveal">
+    <div>
+      <div class="platform-badge">In development</div>
+      <div class="platform-title">The InOutFlows Governance Platform</div>
+      <p class="platform-desc">We're building a lightweight SaaS tool that automates the governance assessment and monitoring work we currently deliver manually — making structured data governance accessible to mid-market teams without a dedicated data office.</p>
+      <ul class="platform-features">
+        <li>Automated governance readiness scoring and reporting</li>
+        <li>Native integrations with Atlan, Soda, Databricks, and dbt</li>
+        <li>DAMA-DMBOK2 aligned policy template library</li>
+        <li>Continuous data quality monitoring dashboards</li>
+        <li>AI readiness audit module with risk flags</li>
+      </ul>
+    </div>
+    <div class="waitlist-card">
+      <div class="waitlist-title">Request early access</div>
+      <p class="waitlist-desc">We're onboarding a small group of design partners — organizations that help shape the product in exchange for priority access and founder pricing.</p>
+      <div class="waitlist-form">
+        <input type="text" placeholder="Your name"/>
+        <input type="email" placeholder="Work email"/>
+        <input type="text" placeholder="Company and role"/>
+        <button type="button">Join the waitlist</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-wrap" id="contact">
+  <div class="contact-inner">
+    <div class="contact-meta">
+      <div class="section-eyebrow">Get in touch</div>
+      <h2>Let's talk about<br/><em>your data.</em></h2>
+      <p>Whether you need a governance assessment, a delivery lead, or just want to explore what's possible — we're happy to have a no-obligation conversation. Most engagements begin with a 30-minute call.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-label">Email</div>
+        <div class="contact-detail-val"><a href="mailto:kelvin.tsang@inoutflows.com">kelvin.tsang@inoutflows.com</a></div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-label">LinkedIn</div>
+        <div class="contact-detail-val"><a href="https://linkedin.com/in/kelvintsang" target="_blank">linkedin.com/in/kelvintsang</a></div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-label">Location</div>
+        <div class="contact-detail-val">Vancouver, BC — serving clients across Canada</div>
+      </div>
+    </div>
+    <div>
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-row">
+          <input type="text" placeholder="Your name"/>
+          <input type="text" placeholder="Company"/>
+        </div>
+        <input type="email" placeholder="Work email"/>
+        <select>
+          <option value="" disabled selected>What are you interested in?</option>
+          <option>GovernReady Audit</option>
+          <option>DataSteward Retainer</option>
+          <option>Data Platform Build</option>
+          <option>Stewardship Workshop</option>
+          <option>Platform early access</option>
+          <option>Something else</option>
+        </select>
+        <textarea placeholder="Tell us a bit about your data challenge..."></textarea>
+        <button type="submit">Send message</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">InOutFlows</div>
+  <p>© 2025 InOutFlows Inc. — Vancouver, BC</p>
+  <p>Data Governance & AI Operations</p>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

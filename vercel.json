@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/kit", "destination": "/#kit", "permanent": false },
+    { "source": "/starter-kit", "destination": "/#kit", "permanent": false }
+  ]
+}

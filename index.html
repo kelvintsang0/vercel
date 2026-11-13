@@ -149,6 +149,13 @@
   .problem-link:hover { border-color: var(--teal); }
 
   /* VIDEOS */
+  .series-topics { list-style: none; padding: 0; margin: 0 0 1.75rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .series-topics li { font-size: 0.8rem; font-weight: 500; color: var(--teal); background: var(--teal-pale); border-radius: 999px; padding: 0.4rem 0.9rem; }
+  .channel-cta { border: 1px solid var(--rule); border-radius: 6px; background: var(--white); padding: 1.5rem 1.75rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; }
+  .channel-cta .cta-line { max-width: 34rem; line-height: 1.6; color: var(--ink); }
+  .channel-cta .cta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; }
+  .channel-cta .cta-start { color: var(--teal); font-weight: 600; text-decoration: none; }
+  .channel-cta .cta-start:hover { text-decoration: underline; }
   .ep-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; }
   .ep-card { display: block; text-decoration: none; color: inherit; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--white); transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s; }
   .ep-card:hover { border-color: var(--teal); box-shadow: 0 6px 24px rgba(27,107,90,0.09); transform: translateY(-2px); }
@@ -456,23 +463,15 @@
   </div>
   <h2>The Practical <em>Steward</em></h2>
   <p class="section-intro">Short, drawn explainers on data governance and stewardship. Each episode takes one real workplace problem, explains the idea behind it, shares a story from my 20+ years in data, and gives you one thing to try on Monday.</p>
-  <div class="ep-grid">
-    <a class="ep-card reveal" href="https://www.youtube.com/watch?v=e_UssgWqG-I" target="_blank" rel="noopener">
-      <div class="ep-thumb"><img class="yt" data-src="https://i.ytimg.com/vi/e_UssgWqG-I/hqdefault.jpg" alt="" loading="lazy" onerror="this.style.display='none'"/><div class="ep-play"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="#1B6B5A"/><path d="M19 15l14 9-14 9z" fill="#fff"/></svg></div></div>
-      <div class="ep-body"><div class="ep-num">Episode 1</div><div class="ep-title">What data governance really means (most teams get it wrong)</div></div>
-    </a>
-    <a class="ep-card reveal" href="https://www.youtube.com/watch?v=TjxP1R4iVKQ" target="_blank" rel="noopener">
-      <div class="ep-thumb"><img class="yt" data-src="https://i.ytimg.com/vi/TjxP1R4iVKQ/hqdefault.jpg" alt="" loading="lazy" onerror="this.style.display='none'"/><div class="ep-play"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="#1B6B5A"/><path d="M19 15l14 9-14 9z" fill="#fff"/></svg></div></div>
-      <div class="ep-body"><div class="ep-num">Episode 2</div><div class="ep-title">Data owner vs data steward: who actually owns your data?</div></div>
-    </a>
-    <a class="ep-card reveal" href="https://www.youtube.com/watch?v=v1GeHHjk8Uc" data-release="2026-11-10T15:00:00Z" target="_blank" rel="noopener">
-      <div class="ep-thumb"><img class="yt" data-src="https://i.ytimg.com/vi/v1GeHHjk8Uc/hqdefault.jpg" alt="" loading="lazy" onerror="this.style.display='none'"/><div class="ep-play"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="#1B6B5A"/><path d="M19 15l14 9-14 9z" fill="#fff"/></svg></div><div class="ep-soon"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#1B6B5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M10 13.5l4 2.25-4 2.25z" fill="#1B6B5A"/></svg><span class="soon-label">Premieres soon</span></div></div>
-      <div class="ep-body"><div class="ep-num">Episode 3</div><div class="ep-title">Data governance roles explained: who actually decides what?</div></div>
-    </a>
-    <a class="ep-card reveal" href="https://www.youtube.com/watch?v=5AhpVKEg1YE" data-release="2026-11-12T15:00:00Z" target="_blank" rel="noopener">
-      <div class="ep-thumb"><img class="yt" data-src="https://i.ytimg.com/vi/5AhpVKEg1YE/hqdefault.jpg" alt="" loading="lazy" onerror="this.style.display='none'"/><div class="ep-play"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="#1B6B5A"/><path d="M19 15l14 9-14 9z" fill="#fff"/></svg></div><div class="ep-soon"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#1B6B5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M10 13.5l4 2.25-4 2.25z" fill="#1B6B5A"/></svg><span class="soon-label">Premieres soon</span></div></div>
-      <div class="ep-body"><div class="ep-num">Episode 4</div><div class="ep-title">How to sell data governance to leadership (without more meetings)</div></div>
-    </a>
+  <ul class="series-topics" aria-label="Topics the series covers">
+    <li>Governance that works</li><li>Owners and stewards</li><li>Data quality</li><li>Glossary and catalogue</li><li>Master and reference data</li><li>Access and security</li><li>AI-ready data</li>
+  </ul>
+  <div class="channel-cta reveal">
+    <div class="cta-line"><strong>Every episode is free on YouTube.</strong> New episodes and quick Shorts land there first, so subscribe and you won&#39;t miss one.</div>
+    <div class="cta-actions">
+      <a class="btn-outline" href="https://www.youtube.com/@thepracticalsteward/videos" target="_blank" rel="noopener">See all episodes</a>
+      <a class="cta-start" href="https://www.youtube.com/watch?v=e_UssgWqG-I" target="_blank" rel="noopener">New here? Start with episode 1 &rarr;</a>
+    </div>
   </div>
   <div class="videos-foot">
     <a class="btn-primary" href="https://www.youtube.com/@thepracticalsteward?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube</a>
